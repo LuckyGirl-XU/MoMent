@@ -17,8 +17,8 @@ if __name__ == "__main__":
     PLM = AutoModel.from_pretrained(pretrained_model_name).cuda()
     print("PLM initialized")
 
-    # [ 'Amazon_movies', 'Enron', 'GDELT', 'Googlemap_CT', 'ICEWS1819', 'Stack_elec', 'Stack_english', 'Stack_ubuntu', 'Yelp']
-    for data_set_name in ['GDELT']:
+    # [ 'Amazon_movies', 'Enron', 'Googlemap_CT', 'ICEWS1819', 'Stack_elec', 'Stack_english', 'Stack_ubuntu', 'Yelp']
+    for data_set_name in ['Amazon_movies']:
         print(data_set_name)
         edge_list = pd.read_csv(data_set_name + '/edge_list.csv')
         num_node = max(edge_list['u'].max(), edge_list['i'].max())
