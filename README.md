@@ -24,3 +24,8 @@ Run `get_pretrained_embeddings.py` to obtain the Bert-based node and edge text e
   ```
 
 ### Edge Classification Task
+
+ - Example of training MoMent with GraphMixer on Enron dataset with text attributes:
+  ```
+  python train_edge_classification.py --dataset_name Enron --model_name GraphMixer --num_runs 5 --gpu 0 --use_feature 'Bert' --loss_weight 0.2 
+  ```
