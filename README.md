@@ -8,5 +8,8 @@ We collect dynamic text-attributed graphs from the DTGB benchmark [here](https:/
 -  multi-round dialogue (Stack elec and Stack ubuntu)
 -  E-commerce network (Googlemap CT, Amazon movies, and Yelp)
 
+### Usage
+
 After downloading the datasets, they should be uncompressed into the DyLink_Datasets folder.
+
 Run `get_pretrained_embeddings.py` to obtain the Bert-based node and edge text embeddings. They will be saved as e_feat.npy and r_feat.npy respectively.
