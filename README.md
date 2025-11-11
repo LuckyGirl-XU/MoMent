@@ -18,23 +18,22 @@ Run `get_pretrained_embeddings.py` to obtain the Bert-based node and edge text e
 ## Reproduce the Results
 
 ### Future Link Prediction Task
-  - Example of training MoMent with GraphMixer on Enron dataset:
+  - Example of training MoMent on Enron dataset:
   ```
-  python train_link_prediction.py --dataset_name Enron --model_name GraphMixer --num_runs 5 --gpu 0 --use_feature 'Bert' --loss_weight 0.2 
+  python train_link_prediction.py --dataset_name Enron --model_name MoMent --num_runs 5 --gpu 0 --use_feature 'Bert' --loss_weight 0.2 
   ```
 
 ### Edge Classification Task
 
- - Example of training MoMent with GraphMixer on Enron dataset:
+ - Example of training MoMent on Enron dataset:
   ```
-  python train_edge_classification.py --dataset_name Enron --model_name GraphMixer --num_runs 5 --gpu 0 --use_feature 'Bert' --loss_weight 0.2 
+  python train_edge_classification.py --dataset_name Enron --model_name MoMent --num_runs 5 --gpu 0 --use_feature 'Bert' --loss_weight 0.2 
   ```
 
-## Baseline and Backbones
+## Baseline
 
   - Codes for DTGB baseline are available [here](https://github.com/zjs123/DTGB).
-  - Codes for backbones (TGAT, GraphMixer, and DyGFormer) are available [here](https://github.com/yule-BUAA/DyGLib).
-  - Codes for the backbone (CNEN) are available [here](https://github.com/ckpassenger/DyGLib_CNEN/tree/CNEN).
+  - Codes for the TPNet are available [here](https://github.com/lxd99/TPNet).
 
 ## Acknowledge
 Our model implementations are referred to the above projects. Thanks for their great contributions!
