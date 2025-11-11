@@ -1,5 +1,5 @@
 # MoMent
-This repo is for our KDD 2025 submission.
+This repo is for our AAAI 2026 work.
 
 ## Datasets
 We collect dynamic text-attributed graphs from the DTGB benchmark [here](https://drive.google.com/drive/folders/1QFxHIjusLOFma30gF59_hcB19Ix3QZtk). Below we provide the details of the datasets:
