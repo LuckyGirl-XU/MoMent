@@ -298,6 +298,20 @@ def load_edge_classification_best_configs(args: argparse.Namespace):
         args.num_neighbors = 20
         args.dropout = 0.1
         args.sample_neighbor_strategy = 'recent'
+        args.num_heads = 2
+        args.learning_rate = 0.00001
+        
+        if args.dataset_name in ['Stack_ubuntu']:
+            
+            args.loss_weight = 0.5
+            
+        elif args.dataset_name in ['Stack_elec']:
+            
+            args.loss_weight = 0.1
+            
+        elif args.dataset_name in ['Amazon_movies', 'Yelp', 'ICEWS1819', 'Googlemap_CT', 'Enron']:
+            
+            args.loss_weight = 0.2
     else:
         raise ValueError(f"Wrong value for model_name {args.model_name}!")
 
