@@ -1,5 +1,5 @@
 # MoMent
-This repo is for our AAAI 2026 work.
+This repo is for our AAAI 2026 work - 'Unlocking Multi-Modal Potentials for Link Prediction on Dynamic Text-Attributed Graph Representation'.
 
 ## Datasets
 We collect dynamic text-attributed graphs from the DTGB benchmark [here](https://drive.google.com/drive/folders/1QFxHIjusLOFma30gF59_hcB19Ix3QZtk). Below we provide the details of the datasets:
@@ -20,14 +20,14 @@ Run `get_pretrained_embeddings.py` to obtain the Bert-based node and edge text e
 ### Future Link Prediction Task
   - Example of training MoMent on Enron dataset:
   ```
-  python train_link_prediction.py --dataset_name Enron --model_name MoMent --num_runs 5 --gpu 0 --use_feature 'Bert' --loss_weight 0.2 
+  python train_link_prediction.py --dataset_name Enron --model_name MoMent --num_runs 5 --gpu 0 --use_feature 'Bert' --load_best_configs
   ```
 
 ### Edge Classification Task
 
  - Example of training MoMent on Enron dataset:
   ```
-  python train_edge_classification.py --dataset_name Enron --model_name MoMent --num_runs 5 --gpu 0 --use_feature 'Bert' --loss_weight 0.2 
+  python train_edge_classification.py --dataset_name Enron --model_name MoMent --num_runs 5 --gpu 0 --use_feature 'Bert' --load_best_configs
   ```
 
 ## Baseline
