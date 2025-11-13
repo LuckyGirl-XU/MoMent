@@ -11,13 +11,17 @@ import torch
 import torch.nn as nn
 
 from models.TGAT import TGAT
+from models.MemoryModel import MemoryModel, compute_src_dst_node_time_shifts
+from models.CAWN import CAWN
+from models.TCL import TCL
 from models.GraphMixer import GraphMixer
+from models.MoMent import MoMent
 from models.DyGFormer import DyGFormer
 from models.CNEN import CNEN
 from models.modules import MergeLayer
 from utils.utils import set_random_seed, convert_to_gpu, get_parameter_sizes, create_optimizer
 from utils.utils import get_neighbor_sampler, NegativeEdgeSampler
-from evaluate_models_utils import evaluate_model_link_prediction
+from evaluate_models_utils import evaluate_model_link_prediction, evaluate_model_retrival
 from utils.metrics import get_link_prediction_metrics
 from utils.DataLoader import get_idx_data_loader, get_link_prediction_data
 from utils.EarlyStopping import EarlyStopping
@@ -101,9 +105,28 @@ if __name__ == "__main__":
         if args.model_name == 'TGAT':
             dynamic_backbone = TGAT(node_raw_features=node_raw_features, edge_raw_features=edge_raw_features, neighbor_sampler=train_neighbor_sampler,
                                     time_feat_dim=args.time_feat_dim, num_layers=args.num_layers, num_heads=args.num_heads, dropout=args.dropout, device=args.device)
+        elif args.model_name in ['JODIE', 'DyRep', 'TGN','TimeSGN']:
+            # four floats that represent the mean and standard deviation of source and destination node time shifts in the training data, which is used for JODIE
+            src_node_mean_time_shift, src_node_std_time_shift, dst_node_mean_time_shift_dst, dst_node_std_time_shift = \
+                compute_src_dst_node_time_shifts(train_data.src_node_ids, train_data.dst_node_ids, train_data.node_interact_times)
+            dynamic_backbone = MemoryModel(node_raw_features=node_raw_features, edge_raw_features=edge_raw_features, neighbor_sampler=train_neighbor_sampler,
+                                           time_feat_dim=args.time_feat_dim, model_name=args.model_name, num_layers=args.num_layers, num_heads=args.num_heads,
+                                           dropout=args.dropout, src_node_mean_time_shift=src_node_mean_time_shift, src_node_std_time_shift=src_node_std_time_shift,
+                                           dst_node_mean_time_shift_dst=dst_node_mean_time_shift_dst, dst_node_std_time_shift=dst_node_std_time_shift, device=args.device)
+        elif args.model_name == 'CAWN':
+            dynamic_backbone = CAWN(node_raw_features=node_raw_features, edge_raw_features=edge_raw_features, neighbor_sampler=train_neighbor_sampler,
+                                    time_feat_dim=args.time_feat_dim, position_feat_dim=args.position_feat_dim, walk_length=args.walk_length,
+                                    num_walk_heads=args.num_walk_heads, dropout=args.dropout, device=args.device)
+        elif args.model_name == 'TCL':
+            dynamic_backbone = TCL(node_raw_features=node_raw_features, edge_raw_features=edge_raw_features, neighbor_sampler=train_neighbor_sampler,
+                                   time_feat_dim=args.time_feat_dim, num_layers=args.num_layers, num_heads=args.num_heads,
+                                   num_depths=args.num_neighbors + 1, dropout=args.dropout, device=args.device)
         elif args.model_name == 'GraphMixer':
             dynamic_backbone = GraphMixer(node_raw_features=node_raw_features, edge_raw_features=edge_raw_features, neighbor_sampler=train_neighbor_sampler,
                                           time_feat_dim=args.time_feat_dim, num_tokens=args.num_neighbors, num_layers=args.num_layers, dropout=args.dropout, device=args.device)
+        elif args.model_name == 'MoMent':
+            dynamic_backbone = MoMent(node_raw_features=node_raw_features, edge_raw_features=edge_raw_features, neighbor_sampler=train_neighbor_sampler,
+                                          time_feat_dim=args.time_feat_dim, num_heads = args.num_heads, num_layers=args.num_layers, dropout=args.dropout, device=args.device)
         elif args.model_name == 'DyGFormer':
             dynamic_backbone = DyGFormer(node_raw_features=node_raw_features, edge_raw_features=edge_raw_features, neighbor_sampler=train_neighbor_sampler,
                                          time_feat_dim=args.time_feat_dim, channel_embedding_dim=args.channel_embedding_dim, patch_size=args.patch_size,
@@ -141,13 +164,15 @@ if __name__ == "__main__":
         for epoch in range(args.num_epochs):
 
             model.train()
-            if args.model_name in ['TGAT', 'GraphMixer', 'DyGFormer']:
+            if args.model_name in ['DyRep', 'TGAT', 'TGN', 'CAWN', 'TCL', 'GraphMixer', 'DyGFormer','TimeSGN', 'MoMent']:
                 # training, only use training graph
                 model[0].set_neighbor_sampler(train_neighbor_sampler)
-            
+            if args.model_name in ['JODIE', 'DyRep', 'TGN','TimeSGN']:
+                # reinitialize memory of memory-based models at the start of each epoch
+                model[0].memory_bank.__init_memory_bank__()
 
             # store train losses and metrics
-            train_losses, train_metrics = [], []
+            train_losses, train_metrics, align_losses = [], [], []
             train_idx_data_loader_tqdm = tqdm(train_idx_data_loader, ncols=120)
             for batch_idx, train_data_indices in enumerate(train_idx_data_loader_tqdm):
                 train_data_indices = train_data_indices.numpy()
@@ -160,7 +185,7 @@ if __name__ == "__main__":
 
                 # we need to compute for positive and negative edges respectively, because the new sampling strategy (for evaluation) allows the negative source nodes to be
                 # different from the source nodes, this is different from previous works that just replace destination nodes with negative destination nodes
-                if args.model_name in ['TGAT']:
+                if args.model_name in ['TGAT', 'CAWN', 'TCL']:
                     # get temporal embedding of source and destination nodes
                     # two Tensors, with shape (batch_size, node_feat_dim)
                     batch_src_node_embeddings, batch_dst_node_embeddings, batch_align_loss_term = \
@@ -176,7 +201,28 @@ if __name__ == "__main__":
                                                                           dst_node_ids=batch_neg_dst_node_ids,
                                                                           node_interact_times=batch_node_interact_times,
                                                                           num_neighbors=args.num_neighbors)
-                
+                elif args.model_name in ['JODIE', 'DyRep', 'TGN','TimeSGN']:
+                    # note that negative nodes do not change the memories while the positive nodes change the memories,
+                    # we need to first compute the embeddings of negative nodes for memory-based models
+                    # get temporal embedding of negative source and negative destination nodes
+                    # two Tensors, with shape (batch_size, node_feat_dim)
+                    batch_neg_src_node_embeddings, batch_neg_dst_node_embeddings, batch_neg_align_loss_term  = \
+                        model[0].compute_src_dst_node_temporal_embeddings(src_node_ids=batch_neg_src_node_ids,
+                                                                          dst_node_ids=batch_neg_dst_node_ids,
+                                                                          node_interact_times=batch_node_interact_times,
+                                                                          edge_ids=None,
+                                                                          edges_are_positive=False,
+                                                                          num_neighbors=args.num_neighbors)
+
+                    # get temporal embedding of source and destination nodes
+                    # two Tensors, with shape (batch_size, node_feat_dim)
+                    batch_src_node_embeddings, batch_dst_node_embeddings, batch_align_loss_term = \
+                        model[0].compute_src_dst_node_temporal_embeddings(src_node_ids=batch_src_node_ids,
+                                                                          dst_node_ids=batch_dst_node_ids,
+                                                                          node_interact_times=batch_node_interact_times,
+                                                                          edge_ids=batch_edge_ids,
+                                                                          edges_are_positive=True,
+                                                                          num_neighbors=args.num_neighbors)
                 elif args.model_name in ['GraphMixer']:
                     # get temporal embedding of source and destination nodes
                     # two Tensors, with shape (batch_size, node_feat_dim)
@@ -184,15 +230,39 @@ if __name__ == "__main__":
                         model[0].compute_src_dst_node_temporal_embeddings(src_node_ids=batch_src_node_ids,
                                                                           dst_node_ids=batch_dst_node_ids,
                                                                           node_interact_times=batch_node_interact_times,
+                                                                          edge_ids=batch_edge_ids,
                                                                           num_neighbors=args.num_neighbors,
                                                                           time_gap=args.time_gap)
 
                     # get temporal embedding of negative source and negative destination nodes
                     # two Tensors, with shape (batch_size, node_feat_dim)
+#                     future_times = batch_node_interact_times - np.random.randint(1, 1000+1, size=len(batch_node_interact_times))
                     batch_neg_src_node_embeddings, batch_neg_dst_node_embeddings, batch_neg_align_loss_term = \
                         model[0].compute_src_dst_node_temporal_embeddings(src_node_ids=batch_neg_src_node_ids,
                                                                           dst_node_ids=batch_neg_dst_node_ids,
                                                                           node_interact_times=batch_node_interact_times,
+                                                                          edge_ids= None,
+                                                                          num_neighbors=args.num_neighbors,
+                                                                          time_gap=args.time_gap)
+                elif args.model_name in ['MoMent']:
+                    # get temporal embedding of source and destination nodes
+                    # two Tensors, with shape (batch_size, node_feat_dim)
+                    batch_src_node_embeddings, batch_dst_node_embeddings, batch_align_loss_term = \
+                        model[0].compute_src_dst_node_temporal_embeddings(src_node_ids=batch_src_node_ids,
+                                                                          dst_node_ids=batch_dst_node_ids,
+                                                                          node_interact_times=batch_node_interact_times,
+                                                                          edge_ids=batch_edge_ids,
+                                                                          num_neighbors=args.num_neighbors,
+                                                                          time_gap=args.time_gap)
+
+                    # get temporal embedding of negative source and negative destination nodes
+                    # two Tensors, with shape (batch_size, node_feat_dim)
+#                     future_times = batch_node_interact_times - np.random.randint(1, 1000+1, size=len(batch_node_interact_times))
+                    batch_neg_src_node_embeddings, batch_neg_dst_node_embeddings, batch_neg_align_loss_term = \
+                        model[0].compute_src_dst_node_temporal_embeddings(src_node_ids=batch_neg_src_node_ids,
+                                                                          dst_node_ids=batch_neg_dst_node_ids,
+                                                                          node_interact_times=batch_node_interact_times,
+                                                                          edge_ids= None,
                                                                           num_neighbors=args.num_neighbors,
                                                                           time_gap=args.time_gap)
                 elif args.model_name in ['DyGFormer']:
@@ -236,18 +306,11 @@ if __name__ == "__main__":
 
                 labels = torch.cat([torch.ones_like(positive_probabilities), torch.zeros_like(negative_probabilities)], dim=0)
                 
-#                 align_loss = batch_align_loss_term
-#                 loss_weight = args.loss_weight #0.2
-                
-#                 batch_align_loss_term
-                
-#                 batch_neg_align_loss_term
 
                 loss = loss_func(input=predicts, target=labels) + args.loss_weight * batch_align_loss_term
-#                 print("loss", loss.shape)
-#                 exit()
 
                 train_losses.append(loss.item())
+                align_losses.append(batch_align_loss_term.item())
 
                 train_metrics.append(get_link_prediction_metrics(predicts=predicts, labels=labels))
 
@@ -257,10 +320,12 @@ if __name__ == "__main__":
 
                 train_idx_data_loader_tqdm.set_description(f'Epoch: {epoch + 1}, train for the {batch_idx + 1}-th batch, train loss: {loss.item()}')
 
-                
+                if args.model_name in ['JODIE', 'DyRep', 'TGN','TimeSGN']:
+                    # detach the memories and raw messages of nodes in the memory bank after each batch, so we don't back propagate to the start of time
+                    model[0].memory_bank.detach_memory_bank()
 
             if (epoch + 1) % args.test_interval_epochs == 0:
-                if args.model_name in ['JODIE', 'DyRep', 'TGN']:
+                if args.model_name in ['JODIE', 'DyRep', 'TGN','TimeSGN']:
                     # backup memory bank after training so it can be used for new validation nodes
                     train_backup_memory_bank = model[0].memory_bank.backup_memory_bank()
 
@@ -275,7 +340,7 @@ if __name__ == "__main__":
                                                                         time_gap=args.time_gap,
                                                                         loss_weight= args.loss_weight)
 
-                if args.model_name in ['JODIE', 'DyRep', 'TGN']:
+                if args.model_name in ['JODIE', 'DyRep', 'TGN','TimeSGN']:
                     # backup memory bank after validating so it can be used for testing nodes (since test edges are strictly later in time than validation edges)
                     val_backup_memory_bank = model[0].memory_bank.backup_memory_bank()
 
@@ -293,12 +358,13 @@ if __name__ == "__main__":
                                                                                         time_gap=args.time_gap,
                                                                                         loss_weight= args.loss_weight)
 
-                if args.model_name in ['JODIE', 'DyRep', 'TGN']:
+                if args.model_name in ['JODIE', 'DyRep', 'TGN','TimeSGN']:
                     # reload validation memory bank for testing nodes or saving models
                     # note that since model treats memory as parameters, we need to reload the memory to val_backup_memory_bank for saving models
                     model[0].memory_bank.reload_memory_bank(val_backup_memory_bank)
 
                 logger.info(f'Epoch: {epoch + 1}, learning rate: {optimizer.param_groups[0]["lr"]}, train loss: {np.mean(train_losses):.4f}')
+                
                 for metric_name in train_metrics[0].keys():
                     logger.info(f'train {metric_name}, {np.mean([train_metric[metric_name] for train_metric in train_metrics]):.4f}')
                 logger.info(f'validate loss: {np.mean(val_losses):.4f}')
@@ -330,7 +396,7 @@ if __name__ == "__main__":
                                                                            time_gap=args.time_gap,
                                                                            loss_weight= args.loss_weight)
 
-                if args.model_name in ['JODIE', 'DyRep', 'TGN']:
+                if args.model_name in ['JODIE', 'DyRep', 'TGN','TimeSGN']:
                     # reload validation memory bank for new testing nodes
                     model[0].memory_bank.reload_memory_bank(val_backup_memory_bank)
 
@@ -345,7 +411,7 @@ if __name__ == "__main__":
                                                                                              time_gap=args.time_gap,
                                                                                              loss_weight= args.loss_weight)
 
-                if args.model_name in ['JODIE', 'DyRep', 'TGN']:
+                if args.model_name in ['JODIE', 'DyRep', 'TGN','TimeSGN']:
                     # reload validation memory bank for testing nodes or saving models
                     # note that since model treats memory as parameters, we need to reload the memory to val_backup_memory_bank for saving models
                     model[0].memory_bank.reload_memory_bank(val_backup_memory_bank)
@@ -364,7 +430,7 @@ if __name__ == "__main__":
         logger.info(f'get final performance on dataset {args.dataset_name}...')
 
         # the saved best model of memory-based models cannot perform validation since the stored memory has been updated by validation data
-        if args.model_name not in ['JODIE', 'DyRep', 'TGN']:
+        if args.model_name not in ['JODIE', 'DyRep', 'TGN','TimeSGN']:
             val_losses, val_metrics = evaluate_model_link_prediction(model_name=args.model_name,
                                                                      model=model,
                                                                      neighbor_sampler=full_neighbor_sampler,
@@ -387,7 +453,7 @@ if __name__ == "__main__":
                                                                                        time_gap=args.time_gap,
                                                                                        loss_weight= args.loss_weight)
 
-        if args.model_name in ['JODIE', 'DyRep', 'TGN']:
+        if args.model_name in ['JODIE', 'DyRep', 'TGN','TimeSGN']:
             # the memory in the best model has seen the validation edges, we need to backup the memory for new testing nodes
             val_backup_memory_bank = model[0].memory_bank.backup_memory_bank()
 
@@ -402,7 +468,7 @@ if __name__ == "__main__":
                                                                    time_gap=args.time_gap,
                                                                    loss_weight= args.loss_weight)
 
-        if args.model_name in ['JODIE', 'DyRep', 'TGN']:
+        if args.model_name in ['JODIE', 'DyRep', 'TGN','TimeSGN']:
             # reload validation memory bank for new testing nodes
             model[0].memory_bank.reload_memory_bank(val_backup_memory_bank)
 
@@ -419,7 +485,7 @@ if __name__ == "__main__":
         # store the evaluation metrics at the current run
         val_metric_dict, new_node_val_metric_dict, test_metric_dict, new_node_test_metric_dict = {}, {}, {}, {}
 
-        if args.model_name not in ['JODIE', 'DyRep', 'TGN']:
+        if args.model_name not in ['JODIE', 'DyRep', 'TGN','TimeSGN']:
             logger.info(f'validate loss: {np.mean(val_losses):.4f}')
             for metric_name in val_metrics[0].keys():
                 average_val_metric = np.mean([val_metric[metric_name] for val_metric in val_metrics])
@@ -447,7 +513,7 @@ if __name__ == "__main__":
         single_run_time = time.time() - run_start_time
         logger.info(f'Run {run + 1} cost {single_run_time:.2f} seconds.')
 
-        if args.model_name not in ['JODIE', 'DyRep', 'TGN']:
+        if args.model_name not in ['JODIE', 'DyRep', 'TGN','TimeSGN']:
             val_metric_all_runs.append(val_metric_dict)
             new_node_val_metric_all_runs.append(new_node_val_metric_dict)
         test_metric_all_runs.append(test_metric_dict)
@@ -459,7 +525,7 @@ if __name__ == "__main__":
             logger.removeHandler(ch)
 
         # save model result
-        if args.model_name not in ['JODIE', 'DyRep', 'TGN']:
+        if args.model_name not in ['JODIE', 'DyRep', 'TGN','TimeSGN']:
             result_json = {
                 "validate metrics": {metric_name: f'{val_metric_dict[metric_name]:.4f}' for metric_name in val_metric_dict},
                 "new node validate metrics": {metric_name: f'{new_node_val_metric_dict[metric_name]:.4f}' for metric_name in new_node_val_metric_dict},
@@ -483,7 +549,7 @@ if __name__ == "__main__":
     # store the average metrics at the log of the last run
     logger.info(f'metrics over {args.num_runs} runs:')
 
-    if args.model_name not in ['JODIE', 'DyRep', 'TGN']:
+    if args.model_name not in ['JODIE', 'DyRep', 'TGN','TimeSGN']:
         for metric_name in val_metric_all_runs[0].keys():
             logger.info(f'validate {metric_name}, {[val_metric_single_run[metric_name] for val_metric_single_run in val_metric_all_runs]}')
             logger.info(f'average validate {metric_name}, {np.mean([val_metric_single_run[metric_name] for val_metric_single_run in val_metric_all_runs]):.4f} '
