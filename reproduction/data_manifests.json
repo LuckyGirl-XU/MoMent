@@ -1,0 +1,267 @@
+{
+  "description": "Recorded official CSV fingerprints; feature fingerprints are included only when available. No training data is bundled.",
+  "datasets": {
+    "Enron": {
+      "files": {
+        "edge_list.csv": {
+          "bytes": 26678263,
+          "sha256": "eff2b921032328a772c40c09d98062a71257cf77491b0e1f2684c9b18c3d4ea5"
+        },
+        "entity_text.csv": {
+          "bytes": 1461073,
+          "sha256": "34560822c46220f9d829164a7a184f8e41d41e91d95f9fe7c794437b69f4d123"
+        },
+        "relation_text.csv": {
+          "bytes": 78531674,
+          "sha256": "c16198ef547507363b1054b5986cf85a3aa0905074818d9880031b1bbdf7bae3"
+        }
+      }
+    },
+    "Stack_elec": {
+      "files": {
+        "edge_list.csv": {
+          "bytes": 49925726,
+          "sha256": "a25ff80aa1a6c1e0aa0089c858a4fa9ebf8a43eb6d91f913d42b0677de754aa5"
+        },
+        "entity_text.csv": {
+          "bytes": 342313772,
+          "sha256": "50cf96356b26b68bc64788ee1e05dcdb16cd953f81e140d4a9d438d7bec72cbc"
+        },
+        "relation_text.csv": {
+          "bytes": 276071632,
+          "sha256": "500cd74cec2af9a1c6a9b12eeaf408a6982880148a0ebb82e5ac7ba03731876b"
+        }
+      }
+    },
+    "ICEWS1819": {
+      "rows": 1100071,
+      "max_node_id": 31796,
+      "max_relation_id": 266,
+      "time_cutoffs": [
+        512.0,
+        623.0
+      ],
+      "files": {
+        "e_feat.npy": {
+          "shape": [
+            31797,
+            768
+          ],
+          "dtype": "float64",
+          "bytes": 195360896,
+          "sha256": "8d1b567a9f426b5499f578bf0af2cbf399a04ee767e02ca92e821c0d311f4d82",
+          "mtime_ns": 1763261451775343471
+        },
+        "r_feat.npy": {
+          "shape": [
+            267,
+            768
+          ],
+          "dtype": "float64",
+          "bytes": 1640576,
+          "sha256": "9bcaf819072579a9adffef8f53a315ff8497ec4c5d2bec7a9cf39ed484819bb9",
+          "mtime_ns": 1763261451583345633
+        },
+        "edge_list.csv": {
+          "bytes": 34696775,
+          "sha256": "5474e5b9295ff96d01ccde8908b2c496c0fb9a65b38c934937cbd29ebc8ec3b3",
+          "mtime_ns": 1763261451575345722
+        },
+        "entity_text.csv": {
+          "bytes": 3523360,
+          "sha256": "fb4669ee0211ac5000d64ae01aca4718643cc6d5e49a14145c88ba6ac9bcc639",
+          "mtime_ns": 1763261451579345678
+        },
+        "relation_text.csv": {
+          "bytes": 10248,
+          "sha256": "49c0b15698b5453a86ee359978e66c9e5a0e38779f4684297d29922717c9536f",
+          "mtime_ns": 1763261451579345678
+        }
+      }
+    },
+    "Googlemap_CT": {
+      "rows": 1380623,
+      "max_node_id": 111168,
+      "max_relation_id": 1196500,
+      "time_cutoffs": [
+        40446.0,
+        47222.0
+      ],
+      "files": {
+        "e_feat.npy": {
+          "shape": [
+            111169,
+            768
+          ],
+          "dtype": "float64",
+          "bytes": 683022464,
+          "sha256": "3cb69a36081ba567593dbe76612baa525210411317c4d9385aba44cdc809783c",
+          "mtime_ns": 1763261453015329490
+        },
+        "r_feat.npy": {
+          "shape": [
+            1196501,
+            768
+          ],
+          "dtype": "float64",
+          "bytes": 7351302272,
+          "sha256": "f8d2ac82a8f91ffc08f212e3cc7db49ba20bdb64e306d30d380b6b7e296a52ef",
+          "mtime_ns": 1763261460095249102
+        },
+        "edge_list.csv": {
+          "bytes": 56760963,
+          "sha256": "8f617a40020fe7ce37d8d932d8d5210dbad9d886dcda9e676f1d27b374cc3d4e",
+          "mtime_ns": 1763261452163339099
+        },
+        "entity_text.csv": {
+          "bytes": 7913801,
+          "sha256": "9d06598131037976dea27cf7391d70c80655388384ea37403f651a88bd848787",
+          "mtime_ns": 1763261452171339009
+        },
+        "relation_text.csv": {
+          "bytes": 172159066,
+          "sha256": "09d896c3b753b738b4a3a3c0ec44ad76af25294e9000e7e06572a46f6f030774",
+          "mtime_ns": 1763261452335337159
+        }
+      }
+    },
+    "Stack_ubuntu": {
+      "rows": 1497006,
+      "max_node_id": 674248,
+      "max_relation_id": 1470549,
+      "time_cutoffs": [
+        3251.0,
+        3944.0
+      ],
+      "files": {
+        "e_feat.npy": {
+          "shape": [
+            674249,
+            768
+          ],
+          "dtype": "float64",
+          "bytes": 4142585984,
+          "sha256": "da5379fbbc737ddd2f8ae158f932dda47c5f598716429428532259f5988951ce",
+          "mtime_ns": 1763261472167109903
+        },
+        "r_feat.npy": {
+          "shape": [
+            1470550,
+            768
+          ],
+          "dtype": "float64",
+          "bytes": 9035059328,
+          "sha256": "a45f081d9dcbc5dd4402ed46190fa746a9bf0b42859dd0db5e4b190f3e753932",
+          "mtime_ns": 1763261476767056165
+        },
+        "edge_list.csv": {
+          "bytes": 60884537,
+          "sha256": "3643a59febe9bcc26773dccb93e7509f84fcaf8ed31e5e979bbb2a998df4a3a7",
+          "mtime_ns": 1763261470043134588
+        },
+        "entity_text.csv": {
+          "bytes": 525886136,
+          "sha256": "cdccc7d3af8027b361ab3f027eeba0af8d968fc7015944faee33c30d938389d3",
+          "mtime_ns": 1763261470011134960
+        },
+        "relation_text.csv": {
+          "bytes": 267191674,
+          "sha256": "fdc3ba1b73f96f83105907c31d2398a060c25cf30fef18c33da28860393f9305",
+          "mtime_ns": 1763261469339142750
+        }
+      }
+    },
+    "Amazon_movies": {
+      "rows": 3217324,
+      "max_node_id": 293566,
+      "max_relation_id": 2596461,
+      "time_cutoffs": [
+        6268.0,
+        6562.0
+      ],
+      "files": {
+        "e_feat.npy": {
+          "shape": [
+            293567,
+            768
+          ],
+          "dtype": "float64",
+          "bytes": 1803675776,
+          "sha256": "4585894ee0824c7a5ec65882670354359128e192057dd15c02abbe30689deb46",
+          "mtime_ns": 1763261494694843144
+        },
+        "r_feat.npy": {
+          "shape": [
+            2596462,
+            768
+          ],
+          "dtype": "float64",
+          "bytes": 15952662656,
+          "sha256": "d0819a59497358451a4ae877c8998428264da48ac36ba54d658608994299d229",
+          "mtime_ns": 1763261543806231691
+        },
+        "edge_list.csv": {
+          "bytes": 137865563,
+          "sha256": "76e9d4c368194f5b1b31ff53c5a9664aad22115aa946322eeec7e70ab99ed0b1",
+          "mtime_ns": 1763261477775044339
+        },
+        "entity_text.csv": {
+          "bytes": 48500026,
+          "sha256": "a3d26b35fbcc39404110e49dba927ddae83964ddc319e501bc2f80c8d00b9163",
+          "mtime_ns": 1763261477027053118
+        },
+        "relation_text.csv": {
+          "bytes": 1457462019,
+          "sha256": "0e9b77f1cf533d9a2e10f1e19a3af2127257925411e7db6027284f67159af1cf",
+          "mtime_ns": 1763261485026958724
+        }
+      }
+    },
+    "Yelp": {
+      "rows": 6990189,
+      "max_node_id": 2138242,
+      "max_relation_id": 6974069,
+      "time_cutoffs": [
+        4926.0,
+        5355.0
+      ],
+      "files": {
+        "e_feat.npy": {
+          "shape": [
+            2138243,
+            768
+          ],
+          "dtype": "float32",
+          "bytes": 6568682624,
+          "sha256": "55961727dd1c82995f122b5f9b8fb489a4dbd67e0c1c16c70390f19c86d01836",
+          "mtime_ns": 1793105122318493238
+        },
+        "r_feat.npy": {
+          "shape": [
+            6974070,
+            768
+          ],
+          "dtype": "float32",
+          "bytes": 21424343168,
+          "sha256": "a6f6e897dc12fa5433bca3ea576bc81c0e2c6289abae2725bbaabf55797fa686",
+          "mtime_ns": 1793157949586621882
+        },
+        "edge_list.csv": {
+          "bytes": 317095138,
+          "sha256": "633b231f17fb98c5a98d53041384e3a2fc9c7536c6d18ea600c15b763f61d011",
+          "mtime_ns": 1793103816532158895
+        },
+        "entity_text.csv": {
+          "bytes": 261546202,
+          "sha256": "ac93d09595aace65cb553a62b59fc628764be2e90656846224b49067ce79719f",
+          "mtime_ns": 1793103817116146600
+        },
+        "relation_text.csv": {
+          "bytes": 4090323645,
+          "sha256": "b350df1a6ea27dcb9002a0c26e766b19d73613a5624a0346356d6091acfb31f6",
+          "mtime_ns": 1793103833139810846
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,267 @@
+{
+  "version": 1,
+  "criterion": "Absolute AP and AUC gap from paper <= 2 percentage points; user acceptance is recorded separately.",
+  "model_sha256": "eb182f1205566957d548ace13d93965b7618eb05a559e81735d266248c38ccc0",
+  "within_tolerance": 6,
+  "total_datasets": 7,
+  "seed": 0,
+  "num_runs": 1,
+  "datasets": {
+    "Enron": {
+      "status": "user_accepted",
+      "parameters": {
+        "batch_size": 512,
+        "num_layers": 1,
+        "num_heads": 2,
+        "num_neighbors": 20,
+        "sample_neighbor_strategy": "recent",
+        "time_feat_dim": 100,
+        "time_gap": 2000,
+        "dropout": 0.1,
+        "learning_rate": 1e-05,
+        "optimizer": "Adam",
+        "weight_decay": 0.0,
+        "patience": 5,
+        "loss_weight": 0.2,
+        "use_feature": "Bert"
+      },
+      "metrics": {
+        "average_precision": {
+          "value": 0.9803,
+          "paper": 0.9671,
+          "difference_pp": 1.319999999999999,
+          "within_2_percentage_points": true
+        },
+        "roc_auc": {
+          "value": 0.9799,
+          "paper": 0.9711,
+          "difference_pp": 0.880000000000003,
+          "within_2_percentage_points": true
+        }
+      },
+      "within_2_percentage_points": true,
+      "evidence": "reproduction/seed0_results.json#Enron"
+    },
+    "Stack_elec": {
+      "status": "user_accepted",
+      "parameters": {
+        "batch_size": 512,
+        "num_layers": 1,
+        "num_heads": 2,
+        "num_neighbors": 20,
+        "sample_neighbor_strategy": "recent",
+        "time_feat_dim": 100,
+        "time_gap": 2000,
+        "dropout": 0.1,
+        "learning_rate": 1e-05,
+        "optimizer": "Adam",
+        "weight_decay": 0.0,
+        "patience": 5,
+        "loss_weight": 0.1,
+        "use_feature": "Bert"
+      },
+      "metrics": {
+        "average_precision": {
+          "value": 0.9445,
+          "paper": 0.9574,
+          "difference_pp": -1.2900000000000023,
+          "within_2_percentage_points": true
+        },
+        "roc_auc": {
+          "value": 0.9306,
+          "paper": 0.9482,
+          "difference_pp": -1.760000000000006,
+          "within_2_percentage_points": true
+        }
+      },
+      "within_2_percentage_points": true,
+      "evidence": "reproduction/seed0_results.json#Stack_elec"
+    },
+    "ICEWS1819": {
+      "status": "passed",
+      "parameters": {
+        "batch_size": 512,
+        "num_layers": 1,
+        "num_heads": 2,
+        "num_neighbors": 20,
+        "sample_neighbor_strategy": "recent",
+        "time_feat_dim": 100,
+        "time_gap": 2000,
+        "dropout": 0.1,
+        "learning_rate": 1e-05,
+        "optimizer": "Adam",
+        "weight_decay": 0.0,
+        "patience": 5,
+        "loss_weight": 0.2,
+        "use_feature": "Bert"
+      },
+      "metrics": {
+        "average_precision": {
+          "value": 1.0,
+          "paper": 0.9924,
+          "difference_pp": 0.7600000000000051,
+          "relative_difference_percent": 0.7658202337767082,
+          "within_2_percentage_points": true
+        },
+        "roc_auc": {
+          "value": 1.0,
+          "paper": 0.9938,
+          "difference_pp": 0.6199999999999983,
+          "relative_difference_percent": 0.6238679814852066,
+          "within_2_percentage_points": true
+        }
+      },
+      "within_2_percentage_points": true,
+      "evidence": "reproduction/seed0_results.json#ICEWS1819"
+    },
+    "Googlemap_CT": {
+      "status": "passed",
+      "parameters": {
+        "batch_size": 512,
+        "num_layers": 1,
+        "num_heads": 2,
+        "num_neighbors": 20,
+        "sample_neighbor_strategy": "recent",
+        "time_feat_dim": 100,
+        "time_gap": 2000,
+        "dropout": 0.1,
+        "learning_rate": 1e-05,
+        "optimizer": "Adam",
+        "weight_decay": 0.0,
+        "patience": 5,
+        "loss_weight": 0.2,
+        "use_feature": "Bert"
+      },
+      "metrics": {
+        "average_precision": {
+          "value": 0.9613,
+          "paper": 0.966,
+          "difference_pp": -0.46999999999999265,
+          "relative_difference_percent": -0.48654244306417466,
+          "within_2_percentage_points": true
+        },
+        "roc_auc": {
+          "value": 0.945,
+          "paper": 0.956,
+          "difference_pp": -1.100000000000001,
+          "relative_difference_percent": -1.1506276150627626,
+          "within_2_percentage_points": true
+        }
+      },
+      "within_2_percentage_points": true,
+      "evidence": "reproduction/seed0_results.json#Googlemap_CT"
+    },
+    "Stack_ubuntu": {
+      "status": "passed",
+      "parameters": {
+        "batch_size": 512,
+        "num_layers": 1,
+        "num_heads": 2,
+        "num_neighbors": 20,
+        "sample_neighbor_strategy": "recent",
+        "time_feat_dim": 100,
+        "time_gap": 2000,
+        "dropout": 0.1,
+        "learning_rate": 3e-05,
+        "optimizer": "Adam",
+        "weight_decay": 0.0,
+        "patience": 5,
+        "loss_weight": 0.5,
+        "use_feature": "Bert"
+      },
+      "metrics": {
+        "average_precision": {
+          "value": 0.9504,
+          "paper": 0.9526,
+          "difference_pp": -0.21999999999999797,
+          "relative_difference_percent": -0.23094688221708795,
+          "within_2_percentage_points": true
+        },
+        "roc_auc": {
+          "value": 0.9404,
+          "paper": 0.9599,
+          "difference_pp": -1.9499999999999962,
+          "relative_difference_percent": -2.031461610584432,
+          "within_2_percentage_points": true
+        }
+      },
+      "within_2_percentage_points": true,
+      "evidence": "reproduction/seed0_results.json#Stack_ubuntu"
+    },
+    "Amazon_movies": {
+      "status": "passed",
+      "parameters": {
+        "batch_size": 512,
+        "num_layers": 1,
+        "num_heads": 2,
+        "num_neighbors": 20,
+        "sample_neighbor_strategy": "recent",
+        "time_feat_dim": 100,
+        "time_gap": 2000,
+        "dropout": 0.1,
+        "learning_rate": 1e-05,
+        "optimizer": "Adam",
+        "weight_decay": 0.0,
+        "patience": 5,
+        "loss_weight": 0.2,
+        "use_feature": "Bert"
+      },
+      "metrics": {
+        "average_precision": {
+          "value": 0.9701,
+          "paper": 0.986,
+          "difference_pp": -1.5900000000000025,
+          "relative_difference_percent": -1.6125760649087244,
+          "within_2_percentage_points": true
+        },
+        "roc_auc": {
+          "value": 0.9671,
+          "paper": 0.9837,
+          "difference_pp": -1.660000000000006,
+          "relative_difference_percent": -1.687506353563084,
+          "within_2_percentage_points": true
+        }
+      },
+      "within_2_percentage_points": true,
+      "evidence": "reproduction/seed0_results.json#Amazon_movies"
+    },
+    "Yelp": {
+      "status": "outside_tolerance",
+      "parameters": {
+        "batch_size": 512,
+        "num_layers": 1,
+        "num_heads": 2,
+        "num_neighbors": 20,
+        "sample_neighbor_strategy": "recent",
+        "time_feat_dim": 100,
+        "time_gap": 2000,
+        "dropout": 0.1,
+        "learning_rate": 1e-05,
+        "optimizer": "Adam",
+        "weight_decay": 0.0,
+        "patience": 5,
+        "loss_weight": 0.2,
+        "use_feature": "Bert"
+      },
+      "metrics": {
+        "average_precision": {
+          "value": 1.0,
+          "paper": 0.9648,
+          "difference_pp": 3.520000000000001,
+          "relative_difference_percent": 3.6484245439469327,
+          "within_2_percentage_points": false
+        },
+        "roc_auc": {
+          "value": 1.0,
+          "paper": 0.9713,
+          "difference_pp": 2.8699999999999948,
+          "relative_difference_percent": 2.954802841552553,
+          "within_2_percentage_points": false
+        }
+      },
+      "within_2_percentage_points": false,
+      "evidence": "reproduction/seed0_results.json#Yelp"
+    }
+  },
+  "yelp_selection": "Default retained: saved new-node validation mean1.0 ties paper128 and exceeds lr3e-5 mean0.99985; all3 groups outside absolute2pp tolerance."
+}

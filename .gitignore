@@ -1,0 +1,15 @@
+__pycache__/
+*.py[cod]
+.DS_Store
+.ipynb_checkpoints/
+DyLink_Datasets/
+logs/
+saved_models/
+saved_results/
+*.npy
+*.npz
+*.pkl
+*.pt
+*.pth
+*.zip
+*.tgz

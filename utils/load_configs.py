@@ -1,4 +1,6 @@
 import argparse
+import json
+from pathlib import Path
 import sys
 import torch
 
@@ -11,7 +13,7 @@ def get_link_prediction_args(is_evaluation: bool = False):
     """
     # arguments
     parser = argparse.ArgumentParser('Interface for the link prediction task')
-    parser.add_argument('--dataset_name', type=str, help='dataset to be used', default='Cite_HepTH',
+    parser.add_argument('--dataset_name', type=str, help='dataset to be used', default='Enron',
                         choices=['Amazon_movies', 'Enron', 'GDELT', 'Googlemap_CT', 'ICEWS1819', 'Stack_elec', 'Stack_english', 'Stack_ubuntu', 'Yelp'])
     parser.add_argument('--batch_size', type=int, default=512, help='batch size')
     parser.add_argument('--model_name', type=str, default='MoMent', help='name of the model, note that EdgeBank is only applicable for evaluation',
@@ -44,12 +46,16 @@ def get_link_prediction_args(is_evaluation: bool = False):
     parser.add_argument('--patience', type=int, default=5, help='patience for early stopping')
     parser.add_argument('--val_ratio', type=float, default=0.15, help='ratio of validation set')
     parser.add_argument('--test_ratio', type=float, default=0.15, help='ratio of test set')
-    parser.add_argument('--num_runs', type=int, default=5, help='number of runs')
+    parser.add_argument('--num_runs', type=int, default=1, help='number of runs')
     parser.add_argument('--test_interval_epochs', type=int, default=5, help='how many epochs to perform testing once')
     parser.add_argument('--negative_sample_strategy', type=str, default='random', choices=['random', 'historical', 'inductive'],
                         help='strategy for the negative edge sampling')
     parser.add_argument('--use_feature', type=str, default='', help='whether to use text embeddings as feature') # or Bert
-    parser.add_argument('--load_best_configs', action='store_true', default=True, help='whether to load the best configurations')
+    best_configs = parser.add_mutually_exclusive_group()
+    best_configs.add_argument('--load_best_configs', '--best-configs', dest='load_best_configs',
+                              action='store_true', default=True, help='load the dataset configuration (default: enabled)')
+    best_configs.add_argument('--no_best_configs', dest='load_best_configs', action='store_false',
+                              help='use explicit CLI parameters without dataset overrides')
     parser.add_argument('--memory_dim', type=int, default=64, help='dimension for neighbor hashtable')
     parser.add_argument('--update_neighbor', action='store_true', default=True, help='whether to update neighbor hashtable')
     parser.add_argument('--loss_weight', type=float, default=0.2, help='Loss weight')
@@ -71,12 +77,8 @@ def get_link_prediction_args(is_evaluation: bool = False):
     parser.add_argument('--rp_use_matrix', action='store_true',
                         help='whether to explicitly maintain temporal walk matrices')
 
-    try:
-        args = parser.parse_args()
-        args.device = f'cuda:{args.gpu}' if torch.cuda.is_available() and args.gpu >= 0 else 'cpu'
-    except:
-        parser.print_help()
-        sys.exit
+    args = parser.parse_args()
+    args.device = f'cuda:{args.gpu}' if torch.cuda.is_available() and args.gpu >= 0 else 'cpu'
 
     if args.load_best_configs:
         load_link_prediction_best_configs(args=args)
@@ -148,27 +150,16 @@ def load_link_prediction_best_configs(args: argparse.Namespace):
         if args.dataset_name == 'CanParl':
             args.sample_neighbor_strategy = 'uniform'
     elif args.model_name == 'MoMent':
-        args.num_layers = 1
-        args.patience = 5
-        args.num_neighbors = 20
-        args.dropout = 0.1
-        args.sample_neighbor_strategy = 'recent'
-        args.num_heads = 2
-        args.learning_rate = 0.00001
-        
-        if args.dataset_name in ['Stack_ubuntu']:
-            
-            args.loss_weight = 0.5
-            
-        elif args.dataset_name in ['Stack_elec']:
-            
-            args.loss_weight = 0.1
-            
-        elif args.dataset_name in ['Amazon_movies', 'Yelp', 'ICEWS1819', 'Googlemap_CT', 'Enron']:
-            
-            args.loss_weight = 0.2
-            
-        
+        config_path = Path(__file__).resolve().parents[1] / 'configs' / 'moment_link_prediction.json'
+        table = json.loads(config_path.read_text())
+        if args.dataset_name not in table['datasets']:
+            raise ValueError(f'No MoMent link-prediction configuration for {args.dataset_name}')
+        parameters = dict(table['defaults'])
+        parameters.update(table['datasets'][args.dataset_name])
+        for name, value in parameters.items():
+            if not hasattr(args, name):
+                raise ValueError(f'Unknown MoMent configuration parameter: {name}')
+            setattr(args, name, value)
     else:
         raise ValueError(f"Wrong value for model_name {args.model_name}!")
 

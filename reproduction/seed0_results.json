@@ -1,0 +1,757 @@
+{
+  "criterion": "Absolute AP and AUC gap from paper <= 2 percentage points; user acceptance is recorded separately.",
+  "seed": 0,
+  "num_runs_per_group": 1,
+  "model_sha256": "eb182f1205566957d548ace13d93965b7618eb05a559e81735d266248c38ccc0",
+  "results": {
+    "Enron": {
+      "fixed_parameters": {
+        "batch_size": 512,
+        "num_layers": 1,
+        "num_heads": 2,
+        "num_neighbors": 20,
+        "sample_neighbor_strategy": "recent",
+        "time_feat_dim": 100,
+        "time_gap": 2000,
+        "dropout": 0.1,
+        "learning_rate": 1e-05,
+        "optimizer": "Adam",
+        "weight_decay": 0.0,
+        "patience": 5,
+        "loss_weight": 0.2,
+        "use_feature": "Bert"
+      },
+      "comparison": {
+        "average_precision": {
+          "value": 0.9803,
+          "paper": 0.9671,
+          "difference_pp": 1.319999999999999,
+          "within_2_percentage_points": true
+        },
+        "roc_auc": {
+          "value": 0.9799,
+          "paper": 0.9711,
+          "difference_pp": 0.880000000000003,
+          "within_2_percentage_points": true
+        }
+      },
+      "within_2_percentage_points": true,
+      "selected_attempt": "original_default_seed0",
+      "new_node_test_metrics": {
+        "average_precision": 0.9803,
+        "roc_auc": 0.9799
+      },
+      "note": "Previously recorded original seed-0 run; reused without rerunning."
+    },
+    "Stack_elec": {
+      "fixed_parameters": {
+        "batch_size": 512,
+        "num_layers": 1,
+        "num_heads": 2,
+        "num_neighbors": 20,
+        "sample_neighbor_strategy": "recent",
+        "time_feat_dim": 100,
+        "time_gap": 2000,
+        "dropout": 0.1,
+        "learning_rate": 1e-05,
+        "optimizer": "Adam",
+        "weight_decay": 0.0,
+        "patience": 5,
+        "loss_weight": 0.1,
+        "use_feature": "Bert"
+      },
+      "comparison": {
+        "average_precision": {
+          "value": 0.9445,
+          "paper": 0.9574,
+          "difference_pp": -1.2900000000000023,
+          "within_2_percentage_points": true
+        },
+        "roc_auc": {
+          "value": 0.9306,
+          "paper": 0.9482,
+          "difference_pp": -1.760000000000006,
+          "within_2_percentage_points": true
+        }
+      },
+      "within_2_percentage_points": true,
+      "selected_attempt": "original_default_seed0",
+      "new_node_test_metrics": {
+        "average_precision": 0.9445,
+        "roc_auc": 0.9306
+      },
+      "note": "Previously recorded original seed-0 run; reused without rerunning."
+    },
+    "ICEWS1819": {
+      "fixed_parameters": {
+        "batch_size": 512,
+        "num_layers": 1,
+        "num_heads": 2,
+        "num_neighbors": 20,
+        "sample_neighbor_strategy": "recent",
+        "time_feat_dim": 100,
+        "time_gap": 2000,
+        "dropout": 0.1,
+        "learning_rate": 1e-05,
+        "optimizer": "Adam",
+        "weight_decay": 0.0,
+        "patience": 5,
+        "loss_weight": 0.2,
+        "use_feature": "Bert"
+      },
+      "comparison": {
+        "average_precision": {
+          "value": 1.0,
+          "paper": 0.9924,
+          "difference_pp": 0.7600000000000051,
+          "relative_difference_percent": 0.7658202337767082,
+          "within_2_percentage_points": true
+        },
+        "roc_auc": {
+          "value": 1.0,
+          "paper": 0.9938,
+          "difference_pp": 0.6199999999999983,
+          "relative_difference_percent": 0.6238679814852066,
+          "within_2_percentage_points": true
+        }
+      },
+      "within_2_percentage_points": true,
+      "selected_attempt": "default",
+      "result": {
+        "validate metrics": {
+          "average_precision": "1.0000",
+          "roc_auc": "1.0000"
+        },
+        "new node validate metrics": {
+          "average_precision": "1.0000",
+          "roc_auc": "1.0000"
+        },
+        "test metrics": {
+          "average_precision": "1.0000",
+          "roc_auc": "1.0000"
+        },
+        "new node test metrics": {
+          "average_precision": "1.0000",
+          "roc_auc": "1.0000"
+        }
+      },
+      "attempts": [
+        {
+          "name": "default",
+          "parameters": {},
+          "result": {
+            "validate metrics": {
+              "average_precision": "1.0000",
+              "roc_auc": "1.0000"
+            },
+            "new node validate metrics": {
+              "average_precision": "1.0000",
+              "roc_auc": "1.0000"
+            },
+            "test metrics": {
+              "average_precision": "1.0000",
+              "roc_auc": "1.0000"
+            },
+            "new node test metrics": {
+              "average_precision": "1.0000",
+              "roc_auc": "1.0000"
+            }
+          },
+          "validation_score": 1.0,
+          "comparison": {
+            "metrics": {
+              "average_precision": {
+                "value": 1.0,
+                "paper": 0.9924,
+                "difference_pp": 0.7600000000000051,
+                "relative_difference_percent": 0.7658202337767082,
+                "within_2_percentage_points": true
+              },
+              "roc_auc": {
+                "value": 1.0,
+                "paper": 0.9938,
+                "difference_pp": 0.6199999999999983,
+                "relative_difference_percent": 0.6238679814852066,
+                "within_2_percentage_points": true
+              }
+            },
+            "within_2_percentage_points": true
+          }
+        }
+      ]
+    },
+    "Googlemap_CT": {
+      "fixed_parameters": {
+        "batch_size": 512,
+        "num_layers": 1,
+        "num_heads": 2,
+        "num_neighbors": 20,
+        "sample_neighbor_strategy": "recent",
+        "time_feat_dim": 100,
+        "time_gap": 2000,
+        "dropout": 0.1,
+        "learning_rate": 1e-05,
+        "optimizer": "Adam",
+        "weight_decay": 0.0,
+        "patience": 5,
+        "loss_weight": 0.2,
+        "use_feature": "Bert"
+      },
+      "comparison": {
+        "average_precision": {
+          "value": 0.9613,
+          "paper": 0.966,
+          "difference_pp": -0.46999999999999265,
+          "relative_difference_percent": -0.48654244306417466,
+          "within_2_percentage_points": true
+        },
+        "roc_auc": {
+          "value": 0.945,
+          "paper": 0.956,
+          "difference_pp": -1.100000000000001,
+          "relative_difference_percent": -1.1506276150627626,
+          "within_2_percentage_points": true
+        }
+      },
+      "within_2_percentage_points": true,
+      "selected_attempt": "default",
+      "result": {
+        "validate metrics": {
+          "average_precision": "1.0000",
+          "roc_auc": "1.0000"
+        },
+        "new node validate metrics": {
+          "average_precision": "1.0000",
+          "roc_auc": "1.0000"
+        },
+        "test metrics": {
+          "average_precision": "0.9824",
+          "roc_auc": "0.9749"
+        },
+        "new node test metrics": {
+          "average_precision": "0.9613",
+          "roc_auc": "0.9450"
+        }
+      },
+      "attempts": [
+        {
+          "name": "default",
+          "parameters": {},
+          "result": {
+            "validate metrics": {
+              "average_precision": "1.0000",
+              "roc_auc": "1.0000"
+            },
+            "new node validate metrics": {
+              "average_precision": "1.0000",
+              "roc_auc": "1.0000"
+            },
+            "test metrics": {
+              "average_precision": "0.9824",
+              "roc_auc": "0.9749"
+            },
+            "new node test metrics": {
+              "average_precision": "0.9613",
+              "roc_auc": "0.9450"
+            }
+          },
+          "validation_score": 1.0,
+          "comparison": {
+            "metrics": {
+              "average_precision": {
+                "value": 0.9613,
+                "paper": 0.966,
+                "difference_pp": -0.46999999999999265,
+                "relative_difference_percent": -0.48654244306417466,
+                "within_2_percentage_points": true
+              },
+              "roc_auc": {
+                "value": 0.945,
+                "paper": 0.956,
+                "difference_pp": -1.100000000000001,
+                "relative_difference_percent": -1.1506276150627626,
+                "within_2_percentage_points": true
+              }
+            },
+            "within_2_percentage_points": true
+          }
+        }
+      ]
+    },
+    "Stack_ubuntu": {
+      "fixed_parameters": {
+        "batch_size": 512,
+        "num_layers": 1,
+        "num_heads": 2,
+        "num_neighbors": 20,
+        "sample_neighbor_strategy": "recent",
+        "time_feat_dim": 100,
+        "time_gap": 2000,
+        "dropout": 0.1,
+        "learning_rate": 3e-05,
+        "optimizer": "Adam",
+        "weight_decay": 0.0,
+        "patience": 5,
+        "loss_weight": 0.5,
+        "use_feature": "Bert"
+      },
+      "comparison": {
+        "average_precision": {
+          "value": 0.9504,
+          "paper": 0.9526,
+          "difference_pp": -0.21999999999999797,
+          "relative_difference_percent": -0.23094688221708795,
+          "within_2_percentage_points": true
+        },
+        "roc_auc": {
+          "value": 0.9404,
+          "paper": 0.9599,
+          "difference_pp": -1.9499999999999962,
+          "relative_difference_percent": -2.031461610584432,
+          "within_2_percentage_points": true
+        }
+      },
+      "within_2_percentage_points": true,
+      "selected_attempt": "learning_rate_3e5",
+      "result": {
+        "validate metrics": {
+          "average_precision": "1.0000",
+          "roc_auc": "1.0000"
+        },
+        "new node validate metrics": {
+          "average_precision": "0.9598",
+          "roc_auc": "0.9519"
+        },
+        "test metrics": {
+          "average_precision": "1.0000",
+          "roc_auc": "1.0000"
+        },
+        "new node test metrics": {
+          "average_precision": "0.9504",
+          "roc_auc": "0.9404"
+        }
+      },
+      "attempts": [
+        {
+          "name": "default",
+          "parameters": {
+            "loss_weight": 0.5
+          },
+          "result": {
+            "validate metrics": {
+              "average_precision": "1.0000",
+              "roc_auc": "1.0000"
+            },
+            "new node validate metrics": {
+              "average_precision": "0.9395",
+              "roc_auc": "0.9338"
+            },
+            "test metrics": {
+              "average_precision": "1.0000",
+              "roc_auc": "1.0000"
+            },
+            "new node test metrics": {
+              "average_precision": "0.9299",
+              "roc_auc": "0.9235"
+            }
+          },
+          "validation_score": 0.93665,
+          "comparison": {
+            "metrics": {
+              "average_precision": {
+                "value": 0.9299,
+                "paper": 0.9526,
+                "difference_pp": -2.2700000000000053,
+                "relative_difference_percent": -2.382951921058162,
+                "within_2_percentage_points": false
+              },
+              "roc_auc": {
+                "value": 0.9235,
+                "paper": 0.9599,
+                "difference_pp": -3.639999999999999,
+                "relative_difference_percent": -3.7920616730909456,
+                "within_2_percentage_points": false
+              }
+            },
+            "within_2_percentage_points": false
+          }
+        },
+        {
+          "name": "paper128",
+          "parameters": {
+            "loss_weight": 0.2,
+            "time_feat_dim": 128
+          },
+          "result": {
+            "validate metrics": {
+              "average_precision": "1.0000",
+              "roc_auc": "1.0000"
+            },
+            "new node validate metrics": {
+              "average_precision": "0.9507",
+              "roc_auc": "0.9463"
+            },
+            "test metrics": {
+              "average_precision": "1.0000",
+              "roc_auc": "1.0000"
+            },
+            "new node test metrics": {
+              "average_precision": "0.9489",
+              "roc_auc": "0.9418"
+            }
+          },
+          "validation_score": 0.9485,
+          "comparison": {
+            "metrics": {
+              "average_precision": {
+                "value": 0.9489,
+                "paper": 0.9526,
+                "difference_pp": -0.37000000000000366,
+                "relative_difference_percent": -0.38841066554692805,
+                "within_2_percentage_points": true
+              },
+              "roc_auc": {
+                "value": 0.9418,
+                "paper": 0.9599,
+                "difference_pp": -1.8100000000000005,
+                "relative_difference_percent": -1.885613084696323,
+                "within_2_percentage_points": true
+              }
+            },
+            "within_2_percentage_points": true
+          }
+        },
+        {
+          "name": "learning_rate_3e5",
+          "parameters": {
+            "loss_weight": 0.5,
+            "learning_rate": 3e-05
+          },
+          "result": {
+            "validate metrics": {
+              "average_precision": "1.0000",
+              "roc_auc": "1.0000"
+            },
+            "new node validate metrics": {
+              "average_precision": "0.9598",
+              "roc_auc": "0.9519"
+            },
+            "test metrics": {
+              "average_precision": "1.0000",
+              "roc_auc": "1.0000"
+            },
+            "new node test metrics": {
+              "average_precision": "0.9504",
+              "roc_auc": "0.9404"
+            }
+          },
+          "validation_score": 0.95585,
+          "comparison": {
+            "metrics": {
+              "average_precision": {
+                "value": 0.9504,
+                "paper": 0.9526,
+                "difference_pp": -0.21999999999999797,
+                "relative_difference_percent": -0.23094688221708795,
+                "within_2_percentage_points": true
+              },
+              "roc_auc": {
+                "value": 0.9404,
+                "paper": 0.9599,
+                "difference_pp": -1.9499999999999962,
+                "relative_difference_percent": -2.031461610584432,
+                "within_2_percentage_points": true
+              }
+            },
+            "within_2_percentage_points": true
+          }
+        }
+      ]
+    },
+    "Amazon_movies": {
+      "fixed_parameters": {
+        "batch_size": 512,
+        "num_layers": 1,
+        "num_heads": 2,
+        "num_neighbors": 20,
+        "sample_neighbor_strategy": "recent",
+        "time_feat_dim": 100,
+        "time_gap": 2000,
+        "dropout": 0.1,
+        "learning_rate": 1e-05,
+        "optimizer": "Adam",
+        "weight_decay": 0.0,
+        "patience": 5,
+        "loss_weight": 0.2,
+        "use_feature": "Bert"
+      },
+      "comparison": {
+        "average_precision": {
+          "value": 0.9701,
+          "paper": 0.986,
+          "difference_pp": -1.5900000000000025,
+          "relative_difference_percent": -1.6125760649087244,
+          "within_2_percentage_points": true
+        },
+        "roc_auc": {
+          "value": 0.9671,
+          "paper": 0.9837,
+          "difference_pp": -1.660000000000006,
+          "relative_difference_percent": -1.687506353563084,
+          "within_2_percentage_points": true
+        }
+      },
+      "within_2_percentage_points": true,
+      "selected_attempt": "default",
+      "result": {
+        "validate metrics": {
+          "average_precision": "0.9998",
+          "roc_auc": "0.9998"
+        },
+        "new node validate metrics": {
+          "average_precision": "0.9908",
+          "roc_auc": "0.9898"
+        },
+        "test metrics": {
+          "average_precision": "0.9959",
+          "roc_auc": "0.9956"
+        },
+        "new node test metrics": {
+          "average_precision": "0.9701",
+          "roc_auc": "0.9671"
+        }
+      },
+      "attempts": [
+        {
+          "name": "default",
+          "parameters": {},
+          "result": {
+            "validate metrics": {
+              "average_precision": "0.9998",
+              "roc_auc": "0.9998"
+            },
+            "new node validate metrics": {
+              "average_precision": "0.9908",
+              "roc_auc": "0.9898"
+            },
+            "test metrics": {
+              "average_precision": "0.9959",
+              "roc_auc": "0.9956"
+            },
+            "new node test metrics": {
+              "average_precision": "0.9701",
+              "roc_auc": "0.9671"
+            }
+          },
+          "validation_score": 0.9903,
+          "comparison": {
+            "metrics": {
+              "average_precision": {
+                "value": 0.9701,
+                "paper": 0.986,
+                "difference_pp": -1.5900000000000025,
+                "relative_difference_percent": -1.6125760649087244,
+                "within_2_percentage_points": true
+              },
+              "roc_auc": {
+                "value": 0.9671,
+                "paper": 0.9837,
+                "difference_pp": -1.660000000000006,
+                "relative_difference_percent": -1.687506353563084,
+                "within_2_percentage_points": true
+              }
+            },
+            "within_2_percentage_points": true
+          }
+        }
+      ]
+    },
+    "Yelp": {
+      "fixed_parameters": {
+        "batch_size": 512,
+        "num_layers": 1,
+        "num_heads": 2,
+        "num_neighbors": 20,
+        "sample_neighbor_strategy": "recent",
+        "time_feat_dim": 100,
+        "time_gap": 2000,
+        "dropout": 0.1,
+        "learning_rate": 1e-05,
+        "optimizer": "Adam",
+        "weight_decay": 0.0,
+        "patience": 5,
+        "loss_weight": 0.2,
+        "use_feature": "Bert"
+      },
+      "comparison": {
+        "average_precision": {
+          "value": 1.0,
+          "paper": 0.9648,
+          "difference_pp": 3.520000000000001,
+          "relative_difference_percent": 3.6484245439469327,
+          "within_2_percentage_points": false
+        },
+        "roc_auc": {
+          "value": 1.0,
+          "paper": 0.9713,
+          "difference_pp": 2.8699999999999948,
+          "relative_difference_percent": 2.954802841552553,
+          "within_2_percentage_points": false
+        }
+      },
+      "within_2_percentage_points": false,
+      "selected_attempt": "default",
+      "result": {
+        "validate metrics": {
+          "average_precision": "1.0000",
+          "roc_auc": "1.0000"
+        },
+        "new node validate metrics": {
+          "average_precision": "1.0000",
+          "roc_auc": "1.0000"
+        },
+        "test metrics": {
+          "average_precision": "0.9999",
+          "roc_auc": "0.9999"
+        },
+        "new node test metrics": {
+          "average_precision": "1.0000",
+          "roc_auc": "1.0000"
+        }
+      },
+      "attempts": [
+        {
+          "name": "default",
+          "parameters": {},
+          "result": {
+            "validate metrics": {
+              "average_precision": "1.0000",
+              "roc_auc": "1.0000"
+            },
+            "new node validate metrics": {
+              "average_precision": "1.0000",
+              "roc_auc": "1.0000"
+            },
+            "test metrics": {
+              "average_precision": "0.9999",
+              "roc_auc": "0.9999"
+            },
+            "new node test metrics": {
+              "average_precision": "1.0000",
+              "roc_auc": "1.0000"
+            }
+          },
+          "validation_score": 1.0,
+          "comparison": {
+            "metrics": {
+              "average_precision": {
+                "value": 1.0,
+                "paper": 0.9648,
+                "difference_pp": 3.520000000000001,
+                "relative_difference_percent": 3.6484245439469327,
+                "within_2_percentage_points": false
+              },
+              "roc_auc": {
+                "value": 1.0,
+                "paper": 0.9713,
+                "difference_pp": 2.8699999999999948,
+                "relative_difference_percent": 2.954802841552553,
+                "within_2_percentage_points": false
+              }
+            },
+            "within_2_percentage_points": false
+          }
+        },
+        {
+          "name": "paper128",
+          "parameters": {
+            "time_feat_dim": 128,
+            "loss_weight": 0.2
+          },
+          "result": {
+            "validate metrics": {
+              "average_precision": "1.0000",
+              "roc_auc": "1.0000"
+            },
+            "new node validate metrics": {
+              "average_precision": "1.0000",
+              "roc_auc": "1.0000"
+            },
+            "test metrics": {
+              "average_precision": "1.0000",
+              "roc_auc": "1.0000"
+            },
+            "new node test metrics": {
+              "average_precision": "0.9999",
+              "roc_auc": "0.9999"
+            }
+          },
+          "validation_score": 1.0,
+          "comparison": {
+            "metrics": {
+              "average_precision": {
+                "value": 0.9999,
+                "paper": 0.9648,
+                "difference_pp": 3.510000000000002,
+                "relative_difference_percent": 3.6380597014925393,
+                "within_2_percentage_points": false
+              },
+              "roc_auc": {
+                "value": 0.9999,
+                "paper": 0.9713,
+                "difference_pp": 2.859999999999996,
+                "relative_difference_percent": 2.944507361268399,
+                "within_2_percentage_points": false
+              }
+            },
+            "within_2_percentage_points": false
+          }
+        },
+        {
+          "name": "learning_rate_3e5",
+          "parameters": {
+            "learning_rate": 3e-05
+          },
+          "result": {
+            "validate metrics": {
+              "average_precision": "1.0000",
+              "roc_auc": "1.0000"
+            },
+            "new node validate metrics": {
+              "average_precision": "0.9998",
+              "roc_auc": "0.9999"
+            },
+            "test metrics": {
+              "average_precision": "0.9996",
+              "roc_auc": "0.9997"
+            },
+            "new node test metrics": {
+              "average_precision": "1.0000",
+              "roc_auc": "1.0000"
+            }
+          },
+          "validation_score": 0.99985,
+          "comparison": {
+            "metrics": {
+              "average_precision": {
+                "value": 1.0,
+                "paper": 0.9648,
+                "difference_pp": 3.520000000000001,
+                "relative_difference_percent": 3.6484245439469327,
+                "within_2_percentage_points": false
+              },
+              "roc_auc": {
+                "value": 1.0,
+                "paper": 0.9713,
+                "difference_pp": 2.8699999999999948,
+                "relative_difference_percent": 2.954802841552553,
+                "within_2_percentage_points": false
+              }
+            },
+            "within_2_percentage_points": false
+          }
+        }
+      ]
+    }
+  }
+}

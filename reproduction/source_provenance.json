@@ -1,0 +1,39 @@
+{
+  "repository": "https://github.com/LuckyGirl-XU/MoMent",
+  "commit": "7df33b60b03def5b9f59004cf16f3bd0c52815bc",
+  "dependency_source": "https://github.com/zjs123/DTGB",
+  "dependency_commit": "840eb442fef603f9c316a61b4dc1c2fc38aa254a",
+  "algorithm_changes": [],
+  "unchanged_source_sha256": {
+    "train_edge_classification.py": "2fdc10a26f32c0f0c85b0617f4272bd663c6691bfccea94c2d7b2245d365b911",
+    "train_link_prediction.py": "caae9cc3658fc45ae212d1427964dc92fd4815f45f205906e657acdcf353924b",
+    "evaluate_models_utils.py": "33946305f224ffcc3f2f4745094ac0ac48fe65264c8f84cf1b8c08e91e011470",
+    "get_pretrained_embeddings.py": "6fa3c9c80ce7121f6fd68f6725faeb9736e8054ddda464b92c56a124e3ace6cc",
+    "evaluate_edge_classification.py": "2ab6f0c7c58996430d2ca69cfbb523a6aea3209a526982e59d748dec387464a1",
+    "utils/metrics.py": "36977d7f53baa81767b3550a478cdc3f1bb0a8fecaa2409cd54d9a9fde9450e4",
+    "utils/EarlyStopping.py": "36a476aca30b7bc2efa71ee63218e09fa0ca67479b8f6ee247e7283a8c7db6cc",
+    "utils/utils.py": "71cfe633228cf069dd39f2fca0dc5f65f474f751868d38d0b030afda6852d64a",
+    "utils/DataLoader.py": "0728ac093a7cf7b7794ce9a17214f7980d659797827c9277d99ec2eda841c6bb",
+    "models/CNEN.py": "42947e9ac13077970a4c4e24f4202d617894668b998feb16ad9e389c19559ba5",
+    "models/MoMent.py": "eb182f1205566957d548ace13d93965b7618eb05a559e81735d266248c38ccc0",
+    "models/TGAT.py": "95acd2adb1bfd214d15597d13cfa85dadd80c9e54d1253489954e71946789990",
+    "models/modules.py": "47114d5ce08ebb5ae5d9980f458677f0fb52041a97e49c095e220b205af4fad2",
+    "models/DyGFormer.py": "90c0487444a63eac267f1f3f36e0b96e89196d455d9ae152b543278f57e9c7f4",
+    "models/GraphMixer.py": "8b62759e0a6cc30d1bd2142251ea61245600c0c4da1c7e3b4a9ebf13efeb3e64"
+  },
+  "upstream_import_dependencies_sha256": {
+    "models/MemoryModel.py": "b72a84f25e626791173265c33da88300f6724513917be898c4956655bc9cc266",
+    "models/CAWN.py": "c489504b811350e890d326fea2d1bf834785a29e976a916c89bdc4783f797236",
+    "models/TCL.py": "bcc9f5177876692ef022ed6df83ddefc4d3aeb9abc0e935acae0df658fcfcad0",
+    "models/EdgeBank.py": "4531df39f4ca8a60b3bf9dcffb4f673d4234d3b32d19e5428df3f1bb8e60cbe9"
+  },
+  "bundled_import_dependencies_sha256": {
+    "models/MemoryModel.py": "b72a84f25e626791173265c33da88300f6724513917be898c4956655bc9cc266",
+    "models/CAWN.py": "c519adf5605ed73c783cac1099c0d787d3834ce06c117cfbe067e3e70aca20ac",
+    "models/TCL.py": "bcc9f5177876692ef022ed6df83ddefc4d3aeb9abc0e935acae0df658fcfcad0",
+    "models/EdgeBank.py": "4531df39f4ca8a60b3bf9dcffb4f673d4234d3b32d19e5428df3f1bb8e60cbe9"
+  },
+  "dependency_local_changes": {
+    "models/CAWN.py": "Remove trailing whitespace only; Python AST unchanged."
+  }
+}

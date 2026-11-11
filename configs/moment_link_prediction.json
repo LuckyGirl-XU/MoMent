@@ -1,0 +1,66 @@
+{
+  "version": 1,
+  "description": "Original MoMent model. Defaults first; dataset overrides and verification evidence are tracked separately.",
+  "defaults": {
+    "batch_size": 512,
+    "num_layers": 1,
+    "num_heads": 2,
+    "num_neighbors": 20,
+    "sample_neighbor_strategy": "recent",
+    "time_feat_dim": 100,
+    "time_gap": 2000,
+    "dropout": 0.1,
+    "learning_rate": 1e-05,
+    "optimizer": "Adam",
+    "weight_decay": 0.0,
+    "patience": 5,
+    "loss_weight": 0.2,
+    "use_feature": "Bert"
+  },
+  "datasets": {
+    "Enron": {},
+    "Stack_elec": {
+      "loss_weight": 0.1
+    },
+    "ICEWS1819": {},
+    "Googlemap_CT": {},
+    "Stack_ubuntu": {
+      "loss_weight": 0.5,
+      "learning_rate": 3e-05
+    },
+    "Amazon_movies": {},
+    "Yelp": {},
+    "GDELT": {},
+    "Stack_english": {}
+  },
+  "paper_targets": {
+    "Enron": {
+      "average_precision": 0.9671,
+      "roc_auc": 0.9711
+    },
+    "Stack_elec": {
+      "average_precision": 0.9574,
+      "roc_auc": 0.9482
+    },
+    "ICEWS1819": {
+      "average_precision": 0.9924,
+      "roc_auc": 0.9938
+    },
+    "Googlemap_CT": {
+      "average_precision": 0.966,
+      "roc_auc": 0.956
+    },
+    "Stack_ubuntu": {
+      "average_precision": 0.9526,
+      "roc_auc": 0.9599
+    },
+    "Amazon_movies": {
+      "average_precision": 0.986,
+      "roc_auc": 0.9837
+    },
+    "Yelp": {
+      "average_precision": 0.9648,
+      "roc_auc": 0.9713
+    }
+  }
+}
