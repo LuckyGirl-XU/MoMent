@@ -38,16 +38,16 @@ Training uses 768-dimensional BERT node and edge features (`e_feat.npy` and `r_f
 Run from the repository root:
 
 ```bash
-python train_link_prediction.py --dataset_name Enron --gpu 0
+python train_link_prediction.py --dataset_name Enron --best-configs --gpu 0
 ```
 
-Parameters are loaded automatically for each dataset from [configs/moment_link_prediction.json](configs/moment_link_prediction.json). No manual hyperparameter changes are needed. The default is one run with seed 0.
+`--best-configs` loads the fixed parameters for each dataset from [configs/moment_link_prediction.json](configs/moment_link_prediction.json). The default is one run with seed 0.
 
-To specify configuration loading explicitly or run multiple seeds:
+Examples for another dataset or multiple seeds:
 
 ```bash
 python train_link_prediction.py --dataset_name Stack_ubuntu --best-configs --gpu 0
-python train_link_prediction.py --dataset_name Enron --num_runs 5 --gpu 0
+python train_link_prediction.py --dataset_name Enron --best-configs --num_runs 5 --gpu 0
 ```
 
 `--load_best_configs` is an alias for `--best-configs`. Use `--no_best_configs` to supply custom hyperparameters.
