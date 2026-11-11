@@ -38,6 +38,7 @@ class DatasetConfigurationTests(unittest.TestCase):
     def test_accepted_enron_prefers_repository_defaults(self):
         args = parse('--dataset_name', 'Enron')
         self.assertEqual((args.time_feat_dim, args.loss_weight), (100, .2))
+        self.assertEqual(vars(parse()), vars(args))
 
     def test_accepted_stack_configuration_is_preserved(self):
         args = parse('--dataset_name', 'Stack_elec')
@@ -78,11 +79,12 @@ class DatasetConfigurationTests(unittest.TestCase):
     def test_loaded_parameters_match_recorded_seed0_experiments(self):
         recorded = json.loads((ROOT/'reproduction/seed0_results.json').read_text())
         for dataset, evidence in recorded['results'].items():
-            with self.subTest(dataset=dataset):
-                args = parse('--dataset_name', dataset, '--best-configs')
-                for name, value in evidence['fixed_parameters'].items():
-                    self.assertEqual(getattr(args, name), value)
-                self.assertEqual(args.num_runs, recorded['num_runs_per_group'])
+            for flags in [[], ['--best-configs'], ['--load_best_configs']]:
+                with self.subTest(dataset=dataset, flags=flags):
+                    args = parse('--dataset_name', dataset, *flags)
+                    for name, value in evidence['fixed_parameters'].items():
+                        self.assertEqual(getattr(args, name), value)
+                    self.assertEqual(args.num_runs, recorded['num_runs_per_group'])
 
     def test_recorded_comparisons_do_not_claim_yelp_passed(self):
         table = json.loads((ROOT/'configs/moment_link_prediction.json').read_text())
